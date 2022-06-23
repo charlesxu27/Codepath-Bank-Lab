@@ -6,7 +6,7 @@ import "./Navbar.css"
 import { Link } from 'react-router-dom'
 
 export default function Navbar(props) {
-  const handleOnInputChange = (change) => {props.setFilterInputValue(change.target.value)}
+  const handleOnInputChange = (change) => {props.setFilterInputValue(change.target.value); console.log(change.target.value);}
   return (
     <nav className="navbar">
       <Logo path="/" />
@@ -32,12 +32,10 @@ export default function Navbar(props) {
   )
 }
 
-export function Logo(path="/") {
+export function Logo(props) {
   return (
-    <a className="logo">
-      <Link to={path}>
+      <Link to={props.path} className="logo">
         <img src={codepath} alt="logo" />
       </Link>
-    </a>
   )
 }

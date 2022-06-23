@@ -13,14 +13,16 @@ export default function App(props) {
   const [transfers, setTransfers] = useState([])
   const [error, setError] = useState("")
   const [filterInputValue, setFilterInputValue] = useState("")
+  const [newTransactionForm, setNewTransactionForm] = useState({"description": "", "category": "", "amount": 0})
+  const [isCreating, setIsCreating] = useState(false)
 
   return (
-    <div className="App">
+    <div className="app">
       <BrowserRouter>
         <Navbar filterInputValue={filterInputValue} setFilterInputValue={setFilterInputValue} />
         <main>
           <Routes>
-            <Route path="/" element={<Home transactions={transactions} setTransactions={setTransactions} transfers={transfers} setTransfers={setTransfers} error={error} setError={setError} isLoading={isLoading} setIsLoading={setIsLoading} filterInputValue={filterInputValue} />} />
+            <Route path="/" element={<Home transactions={transactions} setTransactions={setTransactions} transfers={transfers} setTransfers={setTransfers} error={error} setError={setError} isLoading={isLoading} setIsLoading={setIsLoading} filterInputValue={filterInputValue} newTransactionForm={newTransactionForm} setNewTransactionForm={setNewTransactionForm} isCreating={isCreating} setIsCreating={setIsCreating} />} />
             <Route path="/transactions:transactionId" element={<TransactionDetail />}/>
           </Routes>
 

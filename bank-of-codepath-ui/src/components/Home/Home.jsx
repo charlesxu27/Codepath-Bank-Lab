@@ -10,8 +10,9 @@ export default function Home(props) {
     props.setIsLoading(true)
     axios.get("http://localhost:3001/bank/transactions")
     .then((transactionData) => {
-      props.setTransactions(transactionData)
-      console.log("SUCCESSFUL TRANS GET CALL")
+      props.setTransactions(transactionData.data.transactions)
+      console.log("SUCCESSFUL TRANSACTIONS GET CALL")
+      console.log(transactionData.data.transactions)
     })
     .catch((error) => {
       alert(error)
@@ -36,14 +37,21 @@ export default function Home(props) {
   }, []);
 
   let filteredTransactions = props.transactions
-  if (props.filterInputValue) {
+  if (props.filterInputValue && filteredTransactions) {
+    filteredTransactions.filter((item) => {
+      let loweredDescription = toLowerCase(item.description)
+      return loweredDescription.includes(toLowerCase(props.filterInputValue))
+    })
+  }
+
+  const handleOnSubmitNewTransaction = () => {
     
   }
 
   return (
     <div className="home">
-      <AddTransaction />
-      {props.isLoading ? <h1>Loading...</h1> : <BankActivity /> }
+      <AddTransaction isCreating={props.isCreating} setIsCreating={props.setIsCreating} form={props.newTransactionForm} setForm={props.setNewTransactionForm} handleOnSubmit={handleOnSubmitNewTransaction}/>
+      {props.isLoading ? <h1>Loading...</h1> : <BankActivity transactions={filteredTransactions} /> }
       {props.error ? <h2 className="error">{props.error}</h2> : false }
     </div>
   )
